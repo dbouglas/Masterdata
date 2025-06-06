@@ -1,0 +1,12 @@
+@model Masterdata.Models.Desembarque
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Editar";
+}
+<h2>Editar @Model.Referencia</h2>
+<form method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <label>Referencia</label>
+    <input type="text" name="Referencia" value="@Model.Referencia" />
+    <button type="submit">Guardar</button>
+</form>
