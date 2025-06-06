@@ -1,0 +1,10 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Login";
+}
+<h2>Acceso</h2>
+@if(ViewBag.Error != null){<p style="color:red">@ViewBag.Error</p>}
+<form method="post">
+    <input type="text" name="accessCode" placeholder="Código" />
+    <button type="submit">Entrar</button>
+</form>

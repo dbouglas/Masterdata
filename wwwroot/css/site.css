@@ -1,0 +1,5 @@
+body { font-family: Arial, sans-serif; }
+.container { margin-top: 20px; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { border: 1px solid #ccc; padding: 5px; }
+.tab-buttons button { margin-right: 5px; }

@@ -1,0 +1,56 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Home";
+    var noRevisados = ViewBag.NoRevisados as IEnumerable<Masterdata.Models.Desembarque>;
+    var revisados = ViewBag.Revisados as IEnumerable<Masterdata.Models.Desembarque>;
+}
+<h2>Bienvenido @ViewBag.UserName</h2>
+<div class="filter-bar">
+    <form method="get">
+        <input type="date" name="startDate" />
+        <input type="date" name="endDate" />
+        <button type="submit">Aplicar</button>
+    </form>
+</div>
+<div class="tab-buttons">
+    <button onclick="showTab('no')">No Revisados</button>
+    <button onclick="showTab('rev')">Revisados</button>
+    <button onclick="markReviewed()">Marcar Revisados</button>
+</div>
+<div id="tab-no">
+    @Html.Partial("_Table", noRevisados)
+</div>
+<div id="tab-rev" style="display:none">
+    @Html.Partial("_Table", revisados)
+</div>
+@section Scripts {
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<script>
+$(document).ready(function(){
+    $('table').DataTable({pageLength:50});
+});
+function showTab(id){
+    document.getElementById('tab-no').style.display=id==='no'?'block':'none';
+    document.getElementById('tab-rev').style.display=id==='rev'?'block':'none';
+}
+function markReviewed(){
+    var ids=[];
+    document.querySelectorAll('#tab-no input.select-row:checked').forEach(c=>ids.push(c.value));
+    if(ids.length==0) return;
+    var form=document.createElement('form');
+    form.method='post';
+    form.action='/Home/MarkReviewed';
+    ids.forEach(id=>{
+        var input=document.createElement('input');
+        input.type='hidden';
+        input.name='ids';
+        input.value=id;
+        form.appendChild(input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>
+}
